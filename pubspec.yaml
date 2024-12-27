@@ -1,0 +1,47 @@
+name: available
+description: At Central University, students often encounter difficulty in finding available 
+  lecture halls, especially during peak hours when multiple courses overlap. The academic 
+  complex, primarily composed of several tall buildings with multiple floors, requires students 
+  and course representatives to physically check each floor and room to locate free spaces. Two 
+  buildings are actively used for lecture purposes, but the complex layout, combined with Central
+  University’s large student population, makes this process time-consuming and inefficient.
+  
+  The Available App is designed to streamline this process by providing 
+  real-time updates on room occupancy statuses across the academic complex. Course 
+  representatives can mark rooms as occupied when a class starts and update the room’s 
+  availability when the class ends. Additionally, they can specify start and end times, allowing 
+  the app to send automated notifications reminding users to update room statuses. This feature 
+  ensures that rooms are promptly marked as free once a class concludes, improving room 
+  availability for other students.
+
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  bloc: ^8.1.4
+  dartz: ^0.10.1
+  device_preview: ^1.2.0
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.6
+  flutter_localizations:
+    sdk: flutter
+  get_it: ^8.0.3
+  http: ^1.2.2
+  intl: ^0.19.0
+  provider: ^6.1.2
+
+dev_dependencies:
+  bloc_test: ^9.1.7
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true

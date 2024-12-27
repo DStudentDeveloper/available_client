@@ -1,0 +1,23 @@
+{
+    "name": "Available",
+    "short_name": "Available",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "At Central University, students often encounter difficulty in finding available lecture halls, especially during peak hours when multiple courses overlap. The academic complex, primarily composed of several tall buildings with multiple floors, requires students and course representatives to physically check each floor and room to locate free spaces. Two buildings are actively used for lecture purposes, but the complex layout, combined with Central University’s large student population, makes this process time-consuming and inefficient.\n\nThe Available App is designed to streamline this process by providing real-time updates on room occupancy statuses across the academic complex. Course representatives can mark rooms as occupied when a class starts and update the room’s availability when the class ends. Additionally, they can specify start and end times, allowing the app to send automated notifications reminding users to update room statuses. This feature ensures that rooms are promptly marked as free once a class concludes, improving room availability for other students.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
