@@ -8,6 +8,6 @@ abstract interface class Usecase<Type, Params> {
   ResultFuture<Type> call(Params params);
 }
 
-sealed class NoParams {
+class NoParams {
   const NoParams();
 }
