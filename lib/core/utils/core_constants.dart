@@ -1,4 +1,3 @@
-
 sealed class CoreConstants {
   const CoreConstants();
 
