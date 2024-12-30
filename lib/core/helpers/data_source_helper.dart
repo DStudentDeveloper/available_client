@@ -32,7 +32,7 @@ sealed class DataSourceHelper {
     StackTrace? stackTrace,
   }) {
     log(
-      'Error Occurred',
+      'Error Occurred: ${statusCode ?? 'UNKNOWN'}',
       name: '$repositoryName.$methodName',
       error: e,
       stackTrace: stackTrace ?? StackTrace.current,
