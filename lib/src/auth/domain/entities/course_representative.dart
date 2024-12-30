@@ -16,17 +16,17 @@ class CourseRepresentative extends Equatable {
 
   const CourseRepresentative.empty()
       : this(
-        id: 'Test String',
-        courseId: 'Test String',
-        courseName: 'Test String',
-        facultyId: 'Test String',
-        facultyName: 'Test String',
-        indexNumber: 'Test String',
-        levelId: 'Test String',
-        levelName: 'Test String',
-        name: 'Test String',
-        studentEmail: 'Test String',
-      );
+          id: 'Test String',
+          courseId: 'Test String',
+          courseName: 'Test String',
+          facultyId: 'Test String',
+          facultyName: 'Test String',
+          indexNumber: 'Test String',
+          levelId: 'Test String',
+          levelName: 'Test String',
+          name: 'Test String',
+          studentEmail: 'Test String',
+        );
 
   final String id;
   final String courseId;
