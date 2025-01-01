@@ -32,7 +32,7 @@ class BookingModel extends Booking {
     final timeRange = map['timeRange'] as DataMap;
     return BookingModel(
       id: map['id'] as String,
-      room: map['class'] != null
+      room: map['class'] != null && map['class'] is! String
           ? RoomModel.fromMap(map['class'] as DataMap)
           : null,
       startTime: DateTime.parse(timeRange['start'] as String),
