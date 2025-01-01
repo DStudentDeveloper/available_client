@@ -1,3 +1,4 @@
+import 'package:available/core/common/app/state/availability_controller.dart';
 import 'package:available/core/errors/failure.dart';
 import 'package:available/core/interfaces/usecase.dart';
 import 'package:available/src/block/domain/entities/block.dart';
@@ -15,14 +16,17 @@ class BlockCubit extends Cubit<BlockState> {
     required GetAllBlocks getAllBlocks,
     required GetBlockById getBlockById,
     required GetBlockRooms getBlockRooms,
+    required AvailabilityController availabilityController,
   })  : _getAllBlocks = getAllBlocks,
         _getBlockById = getBlockById,
         _getBlockRooms = getBlockRooms,
+        _availabilityController = availabilityController,
         super(const BlockInitial());
 
   final GetAllBlocks _getAllBlocks;
   final GetBlockById _getBlockById;
   final GetBlockRooms _getBlockRooms;
+  final AvailabilityController _availabilityController;
 
   Future<void> getAllBlocks() async {
     emit(const BlockLoading());
@@ -53,7 +57,10 @@ class BlockCubit extends Cubit<BlockState> {
 
     result.fold(
       (failure) => emit(BlockError.fromFailure(failure)),
-      (rooms) => emit(BlockRoomsFetched(rooms)),
+      (rooms) async {
+        await _availabilityController.cacheAvailabilityForRooms(rooms);
+        emit(BlockRoomsFetched(rooms));
+      },
     );
   }
 }
