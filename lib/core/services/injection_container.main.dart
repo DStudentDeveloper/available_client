@@ -4,6 +4,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   await _initMemoryCache();
+  await _initSocket();
   await _initAuth();
   await _initBlock();
   await _initBooking();
@@ -91,6 +92,17 @@ Future<void> _initAuth() async {
     )
     ..registerLazySingleton(() => FirebaseAuth.instance)
     ..registerLazySingleton(() => FirebaseFirestore.instance);
+}
+
+Future<void> _initSocket() async {
+  sl
+    ..registerLazySingleton(AvailabilityController.new)
+    ..registerSingleton<SocketService>(
+      SocketService(
+        url: 'ws://192.168.8.2:3030',
+        availabilityController: sl(),
+      ),
+    );
 }
 
 Future<void> _initMemoryCache() async {
