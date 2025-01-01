@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:available/src/booking/domain/entities/booking.dart';
 import 'package:available/src/room/domain/entities/room.dart';
 
 sealed class AvailabilityWorker {
@@ -34,7 +35,7 @@ sealed class AvailabilityWorker {
           final time = DateTime.now()
               .copyWith(hour: 0, minute: 0)
               .add(Duration(minutes: minute));
-          roomCache[minute] = _isAvailableAt(roomInfo, time);
+          roomCache[minute] = _isAvailableAt(roomInfo.bookings ?? [], time);
         }
         result[roomInfo.id] = roomCache;
       }
@@ -43,9 +44,8 @@ sealed class AvailabilityWorker {
     }
   }
 
-  static bool _isAvailableAt(Room roomInfo, DateTime time) {
-    if(roomInfo.bookings == null) return true;
-    for (final booking in roomInfo.bookings!) {
+  static bool _isAvailableAt(List<Booking> bookings, DateTime time) {
+    for (final booking in bookings) {
       if (time.isAfter(booking.startTime) && time.isBefore(booking.endTime)) {
         return false;
       }
@@ -53,46 +53,49 @@ sealed class AvailabilityWorker {
     return true;
   }
 
-  static Future<Map<int, bool>> preprocessRoom(Room room) async {
-    if (room.bookings != null && room.bookings!.length > 50) {
+  static Future<Map<int, bool>> preprocessRoom(List<Booking> bookings) async {
+    if (bookings.length > 50) {
       // Use an isolate for large data
-      return _preprocessRoomInIsolate(room);
+      return _preprocessRoomInIsolate(bookings);
     } else {
       // Process directly on the main thread for smaller data
-      return _preprocessRoomOnMain(room);
+      return _preprocessRoomOnMain(bookings);
     }
   }
 
-  static Future<Map<int, bool>> _preprocessRoomOnMain(Room room) async {
+  static Future<Map<int, bool>> _preprocessRoomOnMain(
+    List<Booking> bookings,
+  ) async {
     final result = <int, bool>{};
     for (var minute = 0; minute < 1440; minute++) {
       final time = DateTime.now()
           .copyWith(hour: 0, minute: 0)
           .add(Duration(minutes: minute));
-      result[minute] = _isAvailableAt(room, time);
+      result[minute] = _isAvailableAt(bookings, time);
     }
     return result;
   }
 
-  static Future<Map<int, bool>> _preprocessRoomInIsolate(Room room) async {
+  static Future<Map<int, bool>> _preprocessRoomInIsolate(
+    List<Booking> bookings,
+  ) async {
     final receivePort = ReceivePort();
     await Isolate.spawn(_workerRoom, receivePort.sendPort);
 
     final sendPort = await receivePort.first as SendPort;
 
     final responsePort = ReceivePort();
-    sendPort.send([room, responsePort.sendPort]);
+    sendPort.send([bookings, responsePort.sendPort]);
 
     return await responsePort.first as Map<int, bool>;
   }
-
 
   static Future<void> _workerRoom(SendPort sendPort) async {
     final receivePort = ReceivePort();
     sendPort.send(receivePort.sendPort);
 
     await for (final message in receivePort) {
-      final room = message[0] as Room;
+      final room = message[0] as List<Booking>;
       final responsePort = message[1] as SendPort;
 
       final result = <int, bool>{};
