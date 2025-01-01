@@ -18,6 +18,7 @@ Future<void> _initRoom() async {
         getAllRooms: sl(),
         getRoomBookings: sl(),
         getRoomById: sl(),
+        availabilityController: sl(),
       ),
     )
     ..registerLazySingleton(() => GetAllRooms(sl()))
@@ -54,6 +55,7 @@ Future<void> _initBlock() async {
         getAllBlocks: sl(),
         getBlockById: sl(),
         getBlockRooms: sl(),
+        availabilityController: sl(),
       ),
     )
     ..registerLazySingleton(() => GetAllBlocks(sl()))
