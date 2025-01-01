@@ -26,6 +26,44 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:242724995960:android:58ee7a8fb8807f17877e8d",
+        "android_client_info": {
+          "package_name": "co.akundadababalei.available.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-MREh4UiEShYc243OccmSe5zFMjy8_Vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242724995960:android:d5091f6547970860877e8d",
+        "android_client_info": {
+          "package_name": "co.akundadababalei.available.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-MREh4UiEShYc243OccmSe5zFMjy8_Vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:242724995960:android:c33f786929a586db877e8d",
         "android_client_info": {
           "package_name": "co.akundadababalei.course_rep_management_panel"

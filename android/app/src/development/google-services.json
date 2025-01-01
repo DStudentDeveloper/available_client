@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:242724995960:android:d9164a408509a1cf877e8d",
+        "mobilesdk_app_id": "1:242724995960:android:9ce1480117f2c1df877e8d",
         "android_client_info": {
-          "package_name": "co.akudadababalei.available.dev"
+          "package_name": "co.akundadababalei.available"
         }
       },
       "oauth_client": [],
@@ -26,9 +26,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:242724995960:android:9ce1480117f2c1df877e8d",
+        "mobilesdk_app_id": "1:242724995960:android:58ee7a8fb8807f17877e8d",
         "android_client_info": {
-          "package_name": "co.akundadababalei.available"
+          "package_name": "co.akundadababalei.available.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-MREh4UiEShYc243OccmSe5zFMjy8_Vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242724995960:android:d5091f6547970860877e8d",
+        "android_client_info": {
+          "package_name": "co.akundadababalei.available.stg"
         }
       },
       "oauth_client": [],
