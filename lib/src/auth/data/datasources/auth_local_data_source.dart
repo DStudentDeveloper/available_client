@@ -17,20 +17,19 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<CourseRepresentativeModel?> getUser(String email) async {
     try {
-      final user = await _databaseHelper.get<CourseRepresentativeModel>(
+      final user = await _databaseHelper.get(
         table: CoreConstants.userTable,
         key: CoreConstants.userPrimaryKey,
         value: email,
       );
-      return user;
-    } catch (e, s) {
+      return user == null ? null : CourseRepresentativeModel.fromMap(user);
+    } on Exception catch (e, s) {
       return DataSourceHelper.handleLocalSourceException<
           CourseRepresentativeModel?>(
         e,
         repositoryName: 'AuthLocalDataSourceImpl',
         methodName: 'getUser',
         stackTrace: s,
-        throwException: false,
       );
     }
   }
@@ -39,7 +38,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> saveUser(CourseRepresentativeModel user) async {
     try {
       await _databaseHelper.insert(user);
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       return DataSourceHelper.handleLocalSourceException<void>(
         e,
         repositoryName: 'AuthLocalDataSourceImpl',

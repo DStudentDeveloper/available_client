@@ -30,10 +30,20 @@ class AuthCubit extends Cubit<AuthState> {
   final ResetPassword _resetPassword;
   final UserProvider _userProvider;
 
-  Future<void> login({required String email, required String password}) async {
+  Future<void> login({
+    required String email,
+    required String password,
+    bool invalidateCache = false,
+  }) async {
     emit(const AuthLoading());
 
-    final result = await _login(LoginParams(email: email, password: password));
+    final result = await _login(
+      LoginParams(
+        email: email,
+        password: password,
+        invalidateCache: invalidateCache,
+      ),
+    );
 
     result.fold(
       (failure) => emit(AuthError.fromFailure(failure)),
@@ -51,7 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) => emit(AuthError.fromFailure(failure)),
-      (_) => emit(const PasswordResetEmailSent()),
+      (_) => emit(PasswordResetEmailSent(email)),
     );
   }
 
@@ -80,5 +90,10 @@ class AuthCubit extends Cubit<AuthState> {
       (failure) => emit(AuthError.fromFailure(failure)),
       (_) => emit(const PasswordResetCompleted()),
     );
+  }
+
+  @override
+  void emit(AuthState state) {
+    if (!isClosed) super.emit(state);
   }
 }

@@ -25,7 +25,12 @@ final class LoggedIn extends AuthState {
 }
 
 final class PasswordResetEmailSent extends AuthState {
-  const PasswordResetEmailSent();
+  const PasswordResetEmailSent(this.email);
+
+  final String email;
+
+  @override
+  List<Object> get props => [email];
 }
 
 final class PasswordResetCodeVerified extends AuthState {

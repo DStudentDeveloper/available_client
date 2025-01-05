@@ -31,10 +31,13 @@ class AuthRepoImpl implements AuthRepo {
   ResultFuture<CourseRepresentative> login({
     required String email,
     required String password,
+    required bool invalidateCache,
   }) async {
     try {
-      final localUser = await _localDataSource.getUser(email);
-      if (localUser != null) return Right(localUser);
+      if (!invalidateCache) {
+        final localUser = await _localDataSource.getUser(email);
+        if (localUser != null) return Right(localUser);
+      }
 
       final user = await _remoteDataSource.login(
         email: email,

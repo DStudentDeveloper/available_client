@@ -30,7 +30,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> initiatePasswordReset(String email) async {
     try {
-      await DataSourceHelper.authorizeUser(_auth);
       await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseException catch (e) {
       return DataSourceHelper.handleRemoteSourceException<void>(
@@ -59,7 +58,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
-      await DataSourceHelper.authorizeUser(_auth);
       final userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -114,7 +112,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
-      await DataSourceHelper.authorizeUser(_auth);
       await _auth.confirmPasswordReset(code: code, newPassword: password);
       await _auth.signOut();
     } on FirebaseException catch (e) {
@@ -141,7 +138,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<String> verifyPasswordResetCode(String code) async {
     try {
-      await DataSourceHelper.authorizeUser(_auth);
       return _auth.verifyPasswordResetCode(code);
     } on FirebaseException catch (e) {
       return DataSourceHelper.handleRemoteSourceException<String>(

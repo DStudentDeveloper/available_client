@@ -11,7 +11,11 @@ class Login implements Usecase<CourseRepresentative, LoginParams> {
 
   @override
   ResultFuture<CourseRepresentative> call(LoginParams params) {
-    return _repo.login(email: params.email, password: params.password);
+    return _repo.login(
+      email: params.email,
+      password: params.password,
+      invalidateCache: params.invalidateCache,
+    );
   }
 }
 
@@ -19,14 +23,20 @@ class LoginParams extends Equatable {
   const LoginParams({
     required this.email,
     required this.password,
+    required this.invalidateCache,
   });
 
   const LoginParams.empty()
-      : this(email: 'Test String', password: 'Test String');
+      : this(
+          email: 'Test String',
+          password: 'Test String',
+          invalidateCache: false,
+        );
 
   final String email;
   final String password;
+  final bool invalidateCache;
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [email, password, invalidateCache];
 }

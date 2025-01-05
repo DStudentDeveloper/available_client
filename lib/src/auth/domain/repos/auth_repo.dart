@@ -5,6 +5,7 @@ abstract interface class AuthRepo {
   ResultFuture<CourseRepresentative> login({
     required String email,
     required String password,
+    required bool invalidateCache,
   });
 
   ResultFuture<void> initiatePasswordReset(String email);
