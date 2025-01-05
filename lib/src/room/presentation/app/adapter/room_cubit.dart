@@ -72,4 +72,9 @@ class RoomCubit extends Cubit<RoomState> {
       (bookings) => emit(RoomBookingsFetched(bookings)),
     );
   }
+
+  @override
+  void emit(RoomState state) {
+    if (!isClosed) super.emit(state);
+  }
 }
