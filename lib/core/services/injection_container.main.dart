@@ -37,11 +37,13 @@ Future<void> _initBooking() async {
         bookRoom: sl(),
         cancelBooking: sl(),
         updateBooking: sl(),
+        getUserBookings: sl(),
       ),
     )
     ..registerLazySingleton(() => BookRoom(sl()))
     ..registerLazySingleton(() => CancelBooking(sl()))
     ..registerLazySingleton(() => UpdateBooking(sl()))
+    ..registerLazySingleton(() => GetUserBookings(sl()))
     ..registerLazySingleton<BookingRepo>(() => BookingRepoImpl(sl()))
     ..registerLazySingleton<BookingRemoteDataSrc>(
       () => BookingRemoteDataSrcImpl(httpClient: sl(), authClient: sl()),
@@ -83,6 +85,7 @@ Future<void> _initAuth() async {
     ..registerLazySingleton(() => InitiatePasswordReset(sl()))
     ..registerLazySingleton(() => VerifyPasswordResetCode(sl()))
     ..registerLazySingleton(() => ResetPassword(sl()))
+    ..registerLazySingleton(() => UserProvider.instance)
     ..registerLazySingleton<AuthRepo>(
       () => AuthRepoImpl(remoteDataSource: sl(), localDataSource: sl()),
     )
@@ -111,6 +114,9 @@ Future<void> _initMemoryCache() async {
   final databaseHelper = DatabaseHelper();
   final dbPath = await getDatabasesPath();
   await databaseHelper.open(path.join(dbPath, 'available.db'));
+  final prefs = await SharedPreferences.getInstance();
 
-  sl.registerLazySingleton<DatabaseHelper>(() => databaseHelper);
+  sl
+    ..registerLazySingleton<DatabaseHelper>(() => databaseHelper)
+    ..registerLazySingleton<SharedPreferences>(() => prefs);
 }

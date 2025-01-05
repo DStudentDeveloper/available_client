@@ -1,4 +1,5 @@
 import 'package:available/core/common/app/state/availability_controller.dart';
+import 'package:available/core/common/app/state/user_provider.dart';
 import 'package:available/core/helpers/database_helper.dart';
 import 'package:available/core/services/socket_service.dart';
 import 'package:available/src/auth/data/datasources/auth_local_data_source.dart';
@@ -22,6 +23,7 @@ import 'package:available/src/booking/data/repos/booking_repo_impl.dart';
 import 'package:available/src/booking/domain/repos/booking_repo.dart';
 import 'package:available/src/booking/domain/usecases/book_room.dart';
 import 'package:available/src/booking/domain/usecases/cancel_booking.dart';
+import 'package:available/src/booking/domain/usecases/get_user_bookings.dart';
 import 'package:available/src/booking/domain/usecases/update_booking.dart';
 import 'package:available/src/booking/presentation/app/adapter/booking_cubit.dart';
 import 'package:available/src/room/data/datasources/room_remote_data_src.dart';
@@ -36,6 +38,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 part 'injection_container.main.dart';
