@@ -63,4 +63,9 @@ class BlockCubit extends Cubit<BlockState> {
       },
     );
   }
+
+  @override
+  void emit(BlockState state) {
+    if (!isClosed) super.emit(state);
+  }
 }
