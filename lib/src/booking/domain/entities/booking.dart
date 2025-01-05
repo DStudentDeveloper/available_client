@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 class Booking extends Equatable {
   const Booking({
     required this.id,
+    required this.representativeId,
     required this.startTime,
     required this.endTime,
     this.room,
@@ -13,6 +14,7 @@ class Booking extends Equatable {
 
   Booking.empty()
       : id = 'Test String',
+        representativeId = 'Test String',
         room = null,
         startTime = DateTime.now(),
         endTime = DateTime.now(),
@@ -20,6 +22,7 @@ class Booking extends Equatable {
         level = null;
 
   final String id;
+  final String representativeId;
   final Room? room;
   final DateTime startTime;
   final DateTime endTime;
@@ -29,6 +32,7 @@ class Booking extends Equatable {
   @override
   List<dynamic> get props => [
         id,
+        representativeId,
         room,
         startTime,
         endTime,

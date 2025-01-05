@@ -15,6 +15,8 @@ abstract class BookingRemoteDataSrc {
   Future<void> cancelBooking(String bookingId);
 
   Future<BookingModel> updateBooking(Booking booking);
+
+  Future<List<BookingModel>> getUserBookings(String userId);
 }
 
 class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
@@ -39,6 +41,7 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
       final response = await _httpClient.post(
         uri,
         body: (booking as BookingModel).toJson(),
+        headers: {'Content-Type': 'application/json'},
       );
 
       final payload = jsonDecode(response.body) as DataMap;
@@ -75,7 +78,10 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
 
     try {
       await DataSourceHelper.authorizeUser(_authClient);
-      final response = await _httpClient.delete(uri);
+      final response = await _httpClient.delete(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+      );
 
       if (response.statusCode != 204) {
         final payload = jsonDecode(response.body) as DataMap;
@@ -108,11 +114,12 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
 
     try {
       await DataSourceHelper.authorizeUser(_authClient);
-      final response = await _httpClient.put(
+      final response = await _httpClient.patch(
         uri,
         body: jsonEncode(
           {'timeRange': (booking as BookingModel).toMap()['timeRange']},
         ),
+        headers: {'Content-Type': 'application/json'},
       );
 
       final payload = jsonDecode(response.body) as DataMap;
@@ -135,6 +142,49 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
         e,
         repositoryName: 'BookingRemoteDataSrcImpl',
         methodName: 'updateBooking',
+        stackTrace: s,
+      );
+    }
+  }
+
+  @override
+  Future<List<BookingModel>> getUserBookings(String userId) async {
+    final uri = Uri.http(
+      NetworkConstants.authority,
+      NetworkConstants.getUserBookingsEndpoint,
+      {'representativeId': userId},
+    );
+
+    try {
+      await DataSourceHelper.authorizeUser(_authClient);
+      final response = await _httpClient.get(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      final payload = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        payload as DataMap;
+        return DataSourceHelper.handleRemoteSourceException<List<BookingModel>>(
+          payload,
+          repositoryName: 'BookingRemoteDataSrcImpl',
+          methodName: 'getUserBookings',
+          statusCode: '${response.statusCode} Error',
+          errorMessage: payload['message'] as String,
+        );
+      }
+
+      return List<DataMap>.from(payload as List)
+          .map(BookingModel.fromMap)
+          .toList();
+    } on ServerException {
+      rethrow;
+    } on Exception catch (e, s) {
+      return DataSourceHelper.handleRemoteSourceException<List<BookingModel>>(
+        e,
+        repositoryName: 'BookingRemoteDataSrcImpl',
+        methodName: 'getUserBookings',
         stackTrace: s,
       );
     }

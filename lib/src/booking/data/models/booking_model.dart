@@ -8,6 +8,7 @@ import 'package:available/src/room/domain/entities/room.dart';
 class BookingModel extends Booking {
   const BookingModel({
     required super.id,
+    required super.representativeId,
     required super.startTime,
     required super.endTime,
     super.room,
@@ -18,6 +19,7 @@ class BookingModel extends Booking {
   BookingModel.empty()
       : this(
           id: 'Test String',
+          representativeId: 'Test String',
           room: null,
           startTime: DateTime.now(),
           endTime: DateTime.now(),
@@ -32,6 +34,7 @@ class BookingModel extends Booking {
     final timeRange = map['timeRange'] as DataMap;
     return BookingModel(
       id: map['id'] as String,
+      representativeId: map['representativeId'] as String,
       room: map['class'] != null && map['class'] is! String
           ? RoomModel.fromMap(map['class'] as DataMap)
           : null,
@@ -44,6 +47,7 @@ class BookingModel extends Booking {
 
   BookingModel copyWith({
     String? id,
+    String? representativeId,
     Room? room,
     DateTime? startTime,
     DateTime? endTime,
@@ -52,6 +56,7 @@ class BookingModel extends Booking {
   }) {
     return BookingModel(
       id: id ?? this.id,
+      representativeId: representativeId ?? this.representativeId,
       room: room ?? this.room,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
@@ -63,6 +68,7 @@ class BookingModel extends Booking {
   DataMap toMap() {
     return <String, dynamic>{
       'id': id,
+      'representativeId': representativeId,
       'class': (room as RoomModel?)?.toMap(),
       'timeRange': {
         'start': startTime.toIso8601String(),
@@ -76,6 +82,7 @@ class BookingModel extends Booking {
   DataMap toRemoteMap() {
     return <String, dynamic>{
       'classId': room!.id,
+      'representativeId': representativeId,
       'timeRange': {
         'start': startTime.toIso8601String(),
         'end': endTime.toIso8601String(),

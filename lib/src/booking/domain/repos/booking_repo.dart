@@ -7,4 +7,6 @@ abstract class BookingRepo {
   ResultFuture<void> cancelBooking(String bookingId);
 
   ResultFuture<Booking> updateBooking(Booking booking);
+
+  ResultFuture<List<Booking>> getUserBookings(String userId);
 }

@@ -40,4 +40,14 @@ class BookingRepoImpl implements BookingRepo {
       return Left(ServerFailure.fromException(exception));
     }
   }
+
+  @override
+  ResultFuture<List<Booking>> getUserBookings(String userId) async {
+    try {
+      final result = await _remoteDataSource.getUserBookings(userId);
+      return Right(result);
+    } on ServerException catch (exception) {
+      return Left(ServerFailure.fromException(exception));
+    }
+  }
 }

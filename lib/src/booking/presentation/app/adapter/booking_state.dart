@@ -37,6 +37,19 @@ class BookingUpdated extends BookingState {
   List<Object> get props => [booking];
 }
 
+final class UserBookingsFetched extends BookingState {
+  const UserBookingsFetched(this.bookings);
+
+  final List<Booking> bookings;
+
+  @override
+  List<Object> get props => bookings;
+}
+
+final class ClassEnded extends BookingState {
+  const ClassEnded();
+}
+
 final class BookingError extends BookingState {
   const BookingError({required this.title, required this.message});
 
