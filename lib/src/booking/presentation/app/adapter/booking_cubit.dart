@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:available/core/errors/failure.dart';
+import 'package:available/core/services/notification_service.dart';
+import 'package:available/src/booking/data/models/booking_model.dart';
 import 'package:available/src/booking/domain/entities/booking.dart';
 import 'package:available/src/booking/domain/usecases/book_room.dart';
 import 'package:available/src/booking/domain/usecases/cancel_booking.dart';
@@ -15,16 +19,19 @@ class BookingCubit extends Cubit<BookingState> {
     required CancelBooking cancelBooking,
     required UpdateBooking updateBooking,
     required GetUserBookings getUserBookings,
+    required NotificationService notificationService,
   })  : _bookRoom = bookRoom,
         _cancelBooking = cancelBooking,
         _updateBooking = updateBooking,
         _getUserBookings = getUserBookings,
+        _notificationService = notificationService,
         super(const BookingInitial());
 
   final BookRoom _bookRoom;
   final CancelBooking _cancelBooking;
   final UpdateBooking _updateBooking;
   final GetUserBookings _getUserBookings;
+  final NotificationService _notificationService;
 
   Future<void> bookRoom(Booking booking) async {
     emit(const BookingLoading());
@@ -33,18 +40,26 @@ class BookingCubit extends Cubit<BookingState> {
 
     result.fold(
       (failure) => emit(BookingError.fromFailure(failure)),
-      (booking) => emit(RoomBooked(booking)),
+      (booking) {
+        emit(RoomBooked(booking));
+        _notificationService
+          ..showNotification()
+          ..scheduleNotification(booking as BookingModel);
+      },
     );
   }
 
-  Future<void> cancelBooking(String id) async {
+  Future<void> cancelBooking(Booking booking) async {
     emit(const BookingLoading());
 
-    final result = await _cancelBooking(id);
+    final result = await _cancelBooking(booking.id);
 
     result.fold(
       (failure) => emit(BookingError.fromFailure(failure)),
-      (_) => emit(const BookingCancelled()),
+      (_) {
+        emit(const BookingCancelled());
+        _notificationService.cancelNotification(booking as BookingModel);
+      },
     );
   }
 
@@ -55,7 +70,10 @@ class BookingCubit extends Cubit<BookingState> {
 
     result.fold(
       (failure) => emit(BookingError.fromFailure(failure)),
-      (booking) => emit(BookingUpdated(booking)),
+      (booking) {
+        emit(BookingUpdated(booking));
+        _notificationService.cancelNotification(booking as BookingModel);
+      },
     );
   }
 
@@ -70,14 +88,17 @@ class BookingCubit extends Cubit<BookingState> {
     );
   }
 
-  Future<void> endClass(String bookingId) async {
+  Future<void> endClass(Booking booking) async {
     emit(const BookingLoading());
 
-    final result = await _cancelBooking(bookingId);
+    final result = await _cancelBooking(booking.id);
 
     result.fold(
       (failure) => emit(BookingError.fromFailure(failure)),
-      (_) => emit(const ClassEnded()),
+      (_) {
+        emit(const ClassEnded());
+        _notificationService.cancelNotification(booking as BookingModel);
+      },
     );
   }
 
