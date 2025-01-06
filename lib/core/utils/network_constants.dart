@@ -48,4 +48,7 @@ sealed class NetworkConstants {
   ///
   /// [id] - The ID of the booking.
   static String updateBookingEndpoint(String id) => '$bookRoomEndpoint/$id';
+
+  /// Returns the endpoint to get all bookings for a representative
+  static String getUserBookingsEndpoint = bookRoomEndpoint;
 }
