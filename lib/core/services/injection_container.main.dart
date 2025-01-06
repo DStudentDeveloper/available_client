@@ -38,6 +38,7 @@ Future<void> _initBooking() async {
         cancelBooking: sl(),
         updateBooking: sl(),
         getUserBookings: sl(),
+        notificationService: sl(),
       ),
     )
     ..registerLazySingleton(() => BookRoom(sl()))
@@ -47,7 +48,8 @@ Future<void> _initBooking() async {
     ..registerLazySingleton<BookingRepo>(() => BookingRepoImpl(sl()))
     ..registerLazySingleton<BookingRemoteDataSrc>(
       () => BookingRemoteDataSrcImpl(httpClient: sl(), authClient: sl()),
-    );
+    )
+    ..registerSingleton(NotificationService());
 }
 
 Future<void> _initBlock() async {
@@ -71,6 +73,7 @@ Future<void> _initBlock() async {
 }
 
 Future<void> _initAuth() async {
+  await FirebaseAuth.instance.currentUser?.reload();
   sl
     ..registerFactory(
       () => AuthCubit(
@@ -93,7 +96,7 @@ Future<void> _initAuth() async {
       () => AuthRemoteDataSourceImpl(auth: sl(), firestore: sl()),
     )
     ..registerLazySingleton<AuthLocalDataSource>(
-      () => AuthLocalDataSourceImpl(sl()),
+      () => AuthLocalDataSourceImpl(databaseHelper: sl(), authClient: sl()),
     )
     ..registerLazySingleton(() => FirebaseAuth.instance)
     ..registerLazySingleton(() => FirebaseFirestore.instance);
