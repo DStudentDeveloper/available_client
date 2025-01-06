@@ -1,5 +1,6 @@
 import 'package:available/core/common/app/state/user_provider.dart';
 import 'package:available/core/common/widgets/adaptive_loader.dart';
+import 'package:available/core/extensions/context_extensions.dart';
 import 'package:available/core/utils/core_constants.dart';
 import 'package:available/core/utils/core_utils.dart';
 import 'package:available/src/booking/domain/entities/booking.dart';
@@ -9,9 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookingsScreen extends StatefulWidget {
-  const BookingsScreen({super.key});
+  const BookingsScreen({this.highlightedBookingId, super.key});
 
   static const path = '/bookings';
+
+  final String? highlightedBookingId;
 
   @override
   State<BookingsScreen> createState() => _BookingsScreenState();
@@ -43,11 +46,12 @@ class _BookingsScreenState extends State<BookingsScreen> {
       builder: (_, state) {
         return BookingsView(
           state: state,
+          highlightedBookingId: widget.highlightedBookingId,
           onCancelBooking: (booking) {
-            context.read<BookingCubit>().cancelBooking(booking.id);
+            context.read<BookingCubit>().cancelBooking(booking);
           },
           onEndClass: (booking) {
-            context.read<BookingCubit>().endClass(booking.id);
+            context.read<BookingCubit>().endClass(booking);
           },
           onUpdate: (booking) async {
             final result = await CoreConstants.rootNavigatorKey.currentState!
@@ -68,6 +72,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
 class BookingsView extends StatelessWidget {
   const BookingsView({
     required this.state,
+    required this.highlightedBookingId,
     required this.onCancelBooking,
     required this.onEndClass,
     required this.onUpdate,
@@ -75,6 +80,7 @@ class BookingsView extends StatelessWidget {
   });
 
   final BookingState state;
+  final String? highlightedBookingId;
   final void Function(Booking booking) onCancelBooking;
   final void Function(Booking booking) onEndClass;
   final void Function(Booking booking) onUpdate;
@@ -103,6 +109,9 @@ class BookingsView extends StatelessWidget {
           final endTime = TimeOfDay.fromDateTime(booking.endTime);
           return ListTile(
             leading: const Icon(Icons.book_online_outlined),
+            tileColor: highlightedBookingId == booking.id
+                ? context.theme.colorScheme.primary.withValues(alpha: .1)
+                : null,
             title: Text(booking.room!.fullCode),
             subtitle: Text(
               '${startTime.format(context)} - ${endTime.format(context)}',
