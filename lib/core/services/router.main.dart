@@ -69,7 +69,9 @@ Route<dynamic> routerConfig(RouteSettings settings) {
   } else if (settings.name == BookingsScreen.path) {
     page = BlocProvider(
       create: (_) => sl<BookingCubit>(),
-      child: const BookingsScreen(),
+      child: BookingsScreen(
+        highlightedBookingId: settings.arguments as String?,
+      ),
     );
   } else if (settings.name == UpdateBookingScreen.path) {
     page = BlocProvider(
