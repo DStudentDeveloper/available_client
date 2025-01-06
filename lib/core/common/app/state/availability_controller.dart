@@ -5,14 +5,10 @@ import 'package:available/src/room/domain/entities/room.dart';
 
 /// A controller class to manage the availability of rooms.
 class AvailabilityController {
-  /// A stream that emits the current date and time every second.
-  final Stream<DateTime> timeStream =
-      Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
-
   /// A cache to store the availability status of rooms.
   ///
   /// The key is the room ID, and the value is a map where the key is the
-  /// booking ID and the value is a boolean indicating availability.
+  /// minute and the value is a boolean indicating availability.
   Map<String, Map<int, bool>> availabilityCache = {};
 
   /// A map to store room information.
