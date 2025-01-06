@@ -1,3 +1,4 @@
+// This is a necessary interface.
 // ignore_for_file: one_member_abstracts
 
 import 'package:available/core/utils/typedefs.dart';
