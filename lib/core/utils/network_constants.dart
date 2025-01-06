@@ -20,7 +20,7 @@ sealed class NetworkConstants {
   ///
   /// [id] - The ID of the block.
   static String getBlockRoomsEndpoint(String id) =>
-      '$getBlockByIdEndpoint($id)/classes';
+      '${getBlockByIdEndpoint(id)}/classes';
 
   /// Endpoint to get all rooms.
   static const getAllRoomsEndpoint = '$_api/rooms';
@@ -34,7 +34,7 @@ sealed class NetworkConstants {
   ///
   /// [id] - The ID of the room.
   static String getRoomBookingsEndpoint(String id) =>
-      '$getRoomByIdEndpoint($id)/bookings';
+      '${getRoomByIdEndpoint(id)}/bookings';
 
   /// Endpoint to book a class.
   static const bookRoomEndpoint = '$_api/bookings';
