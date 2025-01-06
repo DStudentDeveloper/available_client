@@ -1,0 +1,30 @@
+import 'dart:developer';
+
+import 'package:available/core/common/app/state/user_provider.dart';
+import 'package:available/core/helpers/cache_helper.dart';
+import 'package:available/core/services/injection_container.dart';
+import 'package:available/core/utils/typedefs.dart';
+import 'package:available/src/auth/presentation/app/adapter/auth_cubit.dart';
+import 'package:available/src/auth/presentation/views/forgot_password_screen.dart';
+import 'package:available/src/auth/presentation/views/login_screen.dart';
+import 'package:available/src/auth/presentation/views/password_reset_confirmation_screen.dart';
+import 'package:available/src/block/domain/entities/block.dart';
+import 'package:available/src/block/presentation/app/adapter/block_cubit.dart';
+import 'package:available/src/block/presentation/views/blocks_screen.dart';
+import 'package:available/src/booking/domain/entities/booking.dart';
+import 'package:available/src/booking/presentation/app/adapter/booking_cubit.dart';
+import 'package:available/src/booking/presentation/views/book_room_screen.dart';
+import 'package:available/src/booking/presentation/views/booking_confirmed_screen.dart';
+import 'package:available/src/booking/presentation/views/bookings_screen.dart';
+import 'package:available/src/booking/presentation/views/update_booking_screen.dart';
+import 'package:available/src/home/presentation/views/home_screen.dart';
+import 'package:available/src/on_boarding/presentation/views/on_boarding_screen.dart';
+import 'package:available/src/room/domain/entities/room.dart';
+import 'package:available/src/room/presentation/views/room_confirmation_screen.dart';
+import 'package:available/src/room/presentation/views/rooms_screen.dart';
+import 'package:available/src/splash/presentation/views/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+part 'router.main.dart';
