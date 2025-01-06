@@ -1,4 +1,5 @@
 import 'package:available/core/interfaces/model.dart';
+import 'package:available/core/utils/typedefs.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -38,7 +39,7 @@ class DatabaseHelper {
     return result;
   }
 
-  Future<T?> get<T extends Model>({
+  Future<DataMap?> get({
     required String table,
     required String key,
     required String value,
@@ -52,6 +53,6 @@ class DatabaseHelper {
 
     if (result.isEmpty) return null;
 
-    return result.first as T;
+    return result.first;
   }
 }
