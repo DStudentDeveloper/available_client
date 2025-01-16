@@ -3,10 +3,10 @@ sealed class NetworkConstants {
   const NetworkConstants();
 
   /// The authority for the network requests.
-  static const authority = 'localhost:3000';
+  static const authority = String.fromEnvironment('API_AUTHORITY');
 
   /// The base API path.
-  static const _api = '/api/v1';
+  static const _api = String.fromEnvironment('API_BASE_PATH');
 
   /// Endpoint to get all blocks.
   static const getAllBlocksEndpoint = '$_api/blocks';
