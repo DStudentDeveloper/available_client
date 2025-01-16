@@ -51,4 +51,7 @@ sealed class NetworkConstants {
 
   /// Returns the endpoint to get all bookings for a representative
   static String getUserBookingsEndpoint = bookRoomEndpoint;
+
+  /// Endpoint to leave feedback.
+  static const leaveFeedbackEndpoint = '$_api/feedback';
 }
