@@ -29,7 +29,7 @@ class RoomRemoteDataSrcImpl implements RoomRemoteDataSrc {
 
   @override
   Future<List<RoomModel>> getAllRooms() async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.getAllRoomsEndpoint,
     );
@@ -66,7 +66,7 @@ class RoomRemoteDataSrcImpl implements RoomRemoteDataSrc {
 
   @override
   Future<List<BookingModel>> getRoomBookings(String roomId) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.getRoomBookingsEndpoint(roomId),
     );
@@ -103,7 +103,7 @@ class RoomRemoteDataSrcImpl implements RoomRemoteDataSrc {
 
   @override
   Future<RoomModel> getRoomById(String roomId) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.getRoomByIdEndpoint(roomId),
     );

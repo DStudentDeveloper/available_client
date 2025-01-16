@@ -31,7 +31,7 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
 
   @override
   Future<BookingModel> bookRoom(Booking booking) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.bookRoomEndpoint,
     );
@@ -56,7 +56,7 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
         );
       }
 
-      return BookingModel.fromMap(jsonDecode(response.body) as DataMap);
+      return BookingModel.fromMap(payload);
     } on ServerException {
       rethrow;
     } on Exception catch (e, s) {
@@ -71,7 +71,7 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
 
   @override
   Future<void> cancelBooking(String bookingId) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.cancelBookingEndpoint(bookingId),
     );
@@ -107,7 +107,7 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
 
   @override
   Future<BookingModel> updateBooking(Booking booking) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.updateBookingEndpoint(booking.id),
     );
@@ -149,7 +149,7 @@ class BookingRemoteDataSrcImpl implements BookingRemoteDataSrc {
 
   @override
   Future<List<BookingModel>> getUserBookings(String userId) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.getUserBookingsEndpoint,
       {'representativeId': userId},

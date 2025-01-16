@@ -135,7 +135,7 @@ class NotificationService {
         'Your class is about to end. Which means your booking is about to end.',
         timeFromTZ,
         platformChannelSpecifics,
-        payload: booking.toJson(),
+        payload: booking.id,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,

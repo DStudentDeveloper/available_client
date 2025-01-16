@@ -29,7 +29,7 @@ class BlockRemoteDataSrcImpl implements BlockRemoteDataSrc {
 
   @override
   Future<List<BlockModel>> getAllBlocks() async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.getAllBlocksEndpoint,
     );
@@ -65,7 +65,7 @@ class BlockRemoteDataSrcImpl implements BlockRemoteDataSrc {
 
   @override
   Future<BlockModel> getBlockById(String blockId) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.getBlockByIdEndpoint(blockId),
     );
@@ -99,7 +99,7 @@ class BlockRemoteDataSrcImpl implements BlockRemoteDataSrc {
 
   @override
   Future<List<RoomModel>> getBlockRooms(String blockId) async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       NetworkConstants.authority,
       NetworkConstants.getBlockRoomsEndpoint(blockId),
     );
