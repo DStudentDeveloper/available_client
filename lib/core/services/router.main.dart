@@ -78,6 +78,13 @@ Route<dynamic> routerConfig(RouteSettings settings) {
       create: (_) => sl<BookingCubit>(),
       child: UpdateBookingScreen(settings.arguments! as Booking),
     );
+  } else if (settings.name == LeaveFeedbackScreen.path) {
+    page = BlocProvider(
+      create: (_) => sl<FeedbackCubit>(),
+      child: const LeaveFeedbackScreen(),
+    );
+  } else if (settings.name == FeedbackConfirmedScreen.path) {
+    page = FeedbackConfirmedScreen(feedback: settings.arguments! as Feedback);
   } else {
     log(name: 'Router', 'No route defined for ${settings.name}');
     page = const Scaffold(body: Center(child: Text('404')));

@@ -9,6 +9,19 @@ Future<void> init() async {
   await _initBlock();
   await _initBooking();
   await _initRoom();
+  await _initFeedback();
+}
+
+Future<void> _initFeedback() async {
+  sl
+    ..registerFactory(
+      () => FeedbackCubit(leaveFeedback: sl()),
+    )
+    ..registerLazySingleton(() => LeaveFeedback(sl()))
+    ..registerLazySingleton<FeedbackRepo>(() => FeedbackRepoImpl(sl()))
+    ..registerLazySingleton<FeedbackRemoteDataSrc>(
+      () => FeedbackRemoteDataSrcImpl(httpClient: sl(), authClient: sl()),
+    );
 }
 
 Future<void> _initRoom() async {
@@ -107,7 +120,7 @@ Future<void> _initSocket() async {
     ..registerLazySingleton(AvailabilityController.new)
     ..registerSingleton<SocketService>(
       SocketService(
-        url: 'ws://192.168.8.2:3030',
+        url: 'ws://${NetworkConstants.authority}',
         availabilityController: sl(),
       ),
     );

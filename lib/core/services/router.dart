@@ -17,6 +17,10 @@ import 'package:available/src/booking/presentation/views/book_room_screen.dart';
 import 'package:available/src/booking/presentation/views/booking_confirmed_screen.dart';
 import 'package:available/src/booking/presentation/views/bookings_screen.dart';
 import 'package:available/src/booking/presentation/views/update_booking_screen.dart';
+import 'package:available/src/feedback/domain/entities/feedback.dart';
+import 'package:available/src/feedback/presentation/app/adapter/feedback_cubit.dart';
+import 'package:available/src/feedback/presentation/views/feedback_confirmed_screen.dart';
+import 'package:available/src/feedback/presentation/views/leave_feedback_screen.dart';
 import 'package:available/src/home/presentation/views/home_screen.dart';
 import 'package:available/src/on_boarding/presentation/views/on_boarding_screen.dart';
 import 'package:available/src/room/domain/entities/room.dart';
@@ -24,7 +28,7 @@ import 'package:available/src/room/presentation/views/room_confirmation_screen.d
 import 'package:available/src/room/presentation/views/rooms_screen.dart';
 import 'package:available/src/splash/presentation/views/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Feedback;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'router.main.dart';

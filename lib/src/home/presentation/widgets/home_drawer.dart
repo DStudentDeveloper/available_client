@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:available/core/common/app/state/user_provider.dart';
 import 'package:available/core/common/widgets/shimmer_image.dart';
-import 'package:available/core/enums/snack_bar_type.dart';
 import 'package:available/core/res/colours.dart';
 import 'package:available/core/res/images.dart';
 import 'package:available/core/utils/core_constants.dart';
 import 'package:available/core/utils/core_utils.dart';
 import 'package:available/src/booking/presentation/views/bookings_screen.dart';
+import 'package:available/src/feedback/presentation/views/feedback_confirmed_screen.dart';
+import 'package:available/src/feedback/presentation/views/leave_feedback_screen.dart';
 import 'package:available/src/home/presentation/utils/home_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -69,11 +70,12 @@ class HomeDrawer extends StatelessWidget {
             title: const Text('Leave Feedback'),
             onTap: () {
               Navigator.of(context).pop();
-              CoreUtils.showSnackBar(
-                context,
-                title: 'Feedback',
-                message: 'Coming Soon',
-                type: SnackBarType.info,
+              CoreConstants.nestedNavigatorKey.currentState!
+                  .pushNamedAndRemoveUntil(
+                LeaveFeedbackScreen.path,
+                (route) =>
+                    route.settings.name != LeaveFeedbackScreen.path &&
+                    route.settings.name != FeedbackConfirmedScreen.path,
               );
             },
           ),
